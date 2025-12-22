@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Zap, Shield, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
 const content = {
   en: {
-    nav: { home: "Home", talent: "For Talent", corpus: "For Companies", contact: "Initialize" },
     hero: {
       h1: "Stop Hiring Employees.",
       h1_b: "Start Integrating Intelligence.",
@@ -13,15 +13,9 @@ const content = {
       cta: "INITIATE RECRUITMENT SEQUENCE",
       stats: "Live Talent Map Active"
     },
-    features: [
-      { title: "Biometric Verification", desc: "Psychological and technical scanning. We don't guess, we know." },
-      { title: "Resonance Guarantee", desc: "14-day zero-risk trial. If they don't fit, we replace instantly." },
-      { title: "Global Deployment", desc: "From request to interview in under 48 terrestrial hours." }
-    ],
     roi: { title: "Inefficiency Calculator", label: "Weekly Budget ($)", result: "Est. Monthly Loss:" }
   },
   es: {
-    nav: { home: "Inicio", talent: "Talento", corpus: "Empresas", contact: "Inicializar" },
     hero: {
       h1: "Deja de Contratar Empleados.",
       h1_b: "Empieza a Integrar Inteligencia.",
@@ -29,11 +23,6 @@ const content = {
       cta: "INICIAR SECUENCIA DE RECLUTAMIENTO",
       stats: "Mapa de Talento Activo"
     },
-    features: [
-      { title: "Verificación Biométrica", desc: "Escaneo psicológico y técnico. No adivinamos, sabemos." },
-      { title: "Garantía de Resonancia", desc: "Prueba de 14 días riesgo cero. Si no encajan, reposición instantánea." },
-      { title: "Despliegue Global", desc: "De la solicitud a la entrevista en menos de 48 horas terrestres." }
-    ],
     roi: { title: "Calculadora de Ineficiencia", label: "Presupuesto Semanal ($)", result: "Pérdida Mensual Est.:" }
   }
 };
@@ -60,25 +49,13 @@ export default function YourStaffingQuantum() {
   const loss = (budget * 0.35 * 4).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans overflow-x-hidden selection:bg-blue-500 selection:text-white">
+    <div className="relative overflow-x-hidden">
+      {/* Fondo de Partículas */}
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-[#050505] to-[#050505] z-0" />
       <ParticleBackground />
 
-      {/* NAV */}
-      <nav className="fixed top-0 w-full z-50 border-b border-white/10 backdrop-blur-md bg-black/50">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="text-2xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-white">
-            YOURSTAFFING<span className="text-blue-500">.AGENCY</span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <button onClick={() => setLang(lang === 'en' ? 'es' : 'en')} className="px-3 py-1 text-xs border border-white/20 rounded-full hover:bg-white/10 transition">{lang === 'en' ? 'ES' : 'EN'}</button>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 text-xs font-bold transition-all shadow-[0_0_15px_rgba(37,99,235,0.5)]">{t.nav.contact}</button>
-          </div>
-        </div>
-      </nav>
-
       {/* HERO */}
-      <main className="relative z-10 pt-40 pb-20 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <main className="relative z-10 pt-20 pb-20 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
         <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
           <div className="flex items-center space-x-2 mb-6 text-blue-400 text-xs font-mono uppercase tracking-widest">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" /><span>{t.hero.stats}</span>
@@ -88,19 +65,28 @@ export default function YourStaffingQuantum() {
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-200">{t.hero.h1_b}</span>
           </h1>
           <p className="text-lg text-gray-400 mb-8 max-w-xl border-l-2 border-blue-500/50 pl-6">{t.hero.sub}</p>
-          <button className="group relative px-8 py-4 border border-blue-500 text-blue-400 font-bold uppercase tracking-widest hover:bg-blue-900/20 transition-all flex items-center gap-3">
-            {t.hero.cta} <ChevronRight className="w-4 h-4" />
-          </button>
+          
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link href="/post-job">
+                <button className="group relative px-8 py-4 border border-blue-500 bg-blue-600/10 text-blue-400 font-bold uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
+                {t.hero.cta} <ChevronRight className="w-4 h-4" />
+                </button>
+            </Link>
+            <button onClick={() => setLang(lang === 'en' ? 'es' : 'en')} className="px-8 py-4 border border-white/10 text-gray-400 hover:text-white font-bold uppercase tracking-widest hover:bg-white/5 transition-all w-full sm:w-auto">
+                {lang === 'en' ? 'SWITCH TO ES' : 'CAMBIAR A EN'}
+            </button>
+          </div>
+
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }} className="relative h-[400px] w-full bg-gradient-to-br from-gray-900 to-black rounded-xl border border-white/10 p-6 backdrop-blur-sm">
+        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }} className="relative h-[400px] w-full bg-gradient-to-br from-gray-900 to-black rounded-xl border border-white/10 p-6 backdrop-blur-sm hidden lg:block">
           <div className="absolute inset-0 grid grid-cols-6 grid-rows-6 gap-1 opacity-20">{[...Array(36)].map((_, i) => <div key={i} className="border border-blue-500/30" />)}</div>
           <div className="absolute bottom-6 left-6 text-xs font-mono text-green-400">&gt; SYSTEM: TALENT NODE SYNCHRONIZED...<br />&gt; STATUS: READY.</div>
         </motion.div>
       </main>
 
       {/* ROI */}
-      <section className="py-20 px-6 max-w-4xl mx-auto text-center">
+      <section className="py-20 px-6 max-w-4xl mx-auto text-center relative z-10">
         <div className="bg-gradient-to-r from-gray-900 to-black border border-white/10 rounded-2xl p-12">
           <h2 className="text-3xl font-bold mb-8">{t.roi.title}</h2>
           <div className="mb-8">
