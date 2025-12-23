@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { 
   Cpu, Globe, Users, Shield, Zap, 
-  Search, CheckCircle2, ArrowRight, Server
+  Search, CheckCircle2, ArrowRight
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -72,27 +72,25 @@ export default function Services() {
                   <FeatureItem text="Validación de código automática" />
                   <FeatureItem text="Entrevista técnica grabada en Video" />
                 </ul>
-                <Link href="/contact">
-                  <button className="px-8 py-3 bg-blue-600 hover:bg-blue-500 rounded-lg font-bold transition flex items-center gap-2">
+                <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 hover:bg-blue-500 rounded-lg font-bold transition text-white">
                     ACTIVAR BÚSQUEDA <ArrowRight className="w-4 h-4" />
-                  </button>
                 </Link>
               </div>
               <div className="bg-[#0A0A0A] p-8 rounded-2xl border border-blue-500/20 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl"></div>
-                {/* Mockup visual de la IA */}
+                {/* Mockup visual de la IA - CORREGIDO CON &gt; */}
                 <div className="space-y-4 font-mono text-xs text-blue-300">
                   <div className="flex justify-between border-b border-white/5 pb-2">
-                    <span>> Target_Role:</span> <span className="text-white">Senior Backend Dev</span>
+                    <span>&gt; Target_Role:</span> <span className="text-white">Senior Backend Dev</span>
                   </div>
                   <div className="flex justify-between border-b border-white/5 pb-2">
-                    <span>> Stack_Req:</span> <span className="text-white">Node.js + Rust</span>
+                    <span>&gt; Stack_Req:</span> <span className="text-white">Node.js + Rust</span>
                   </div>
                   <div className="flex justify-between border-b border-white/5 pb-2">
-                    <span>> Candidates_Scanned:</span> <span className="text-white">14,502</span>
+                    <span>&gt; Candidates_Scanned:</span> <span className="text-white">14,502</span>
                   </div>
                   <div className="flex justify-between border-b border-white/5 pb-2">
-                    <span>> Match_Rate > 95%:</span> <span className="text-green-400">3 Profiles Found</span>
+                    <span>&gt; Match_Rate &gt; 95%:</span> <span className="text-green-400">3 Profiles Found</span>
                   </div>
                   <div className="mt-4 p-4 bg-blue-900/20 rounded border border-blue-500/30 text-center">
                     <span className="animate-pulse">● INITIATING CONTACT SEQUENCE...</span>
@@ -119,10 +117,8 @@ export default function Services() {
                   <FeatureItem text="Zona horaria alineada (LATAM/US)" />
                   <FeatureItem text="Reemplazo garantizado en 7 días" />
                 </ul>
-                <Link href="/pricing">
-                  <button className="px-8 py-3 bg-purple-600 hover:bg-purple-500 rounded-lg font-bold transition flex items-center gap-2">
+                <Link href="/pricing" className="inline-flex items-center gap-2 px-8 py-3 bg-purple-600 hover:bg-purple-500 rounded-lg font-bold transition text-white">
                     VER TARIFAS <ArrowRight className="w-4 h-4" />
-                  </button>
                 </Link>
               </div>
               <div className="bg-[#0A0A0A] p-8 rounded-2xl border border-purple-500/20 relative overflow-hidden order-1 lg:order-2">
@@ -158,10 +154,8 @@ export default function Services() {
                   <FeatureItem text="Pagos en moneda local o USD/Crypto" />
                   <FeatureItem text="Gestión de beneficios y seguros" />
                 </ul>
-                <Link href="/contact">
-                  <button className="px-8 py-3 bg-green-600 hover:bg-green-500 rounded-lg font-bold transition flex items-center gap-2">
+                <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-3 bg-green-600 hover:bg-green-500 rounded-lg font-bold transition text-white">
                     HABLÁ CON UN EXPERTO <ArrowRight className="w-4 h-4" />
-                  </button>
                 </Link>
               </div>
               <div className="bg-[#0A0A0A] p-8 rounded-2xl border border-green-500/20 relative overflow-hidden text-center">
