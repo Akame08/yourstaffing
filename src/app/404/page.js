@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 
-export default function Custom404() {
+export default function Page404() {
   return notFound();
 }
-
