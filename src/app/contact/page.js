@@ -5,7 +5,7 @@ import { Mail, MessageSquare, MapPin, Send, CheckCircle, Loader2 } from 'lucide-
 export default function Contact() {
   // --- CONFIGURACIÓN ---
   // PEGA AQUÍ TU ID DE FORMSPREE (Ej: "xkqnqjqz")
-  const FORMSPREE_ID = "meejpwoy"; 
+  const FORMSPREE_ID = "mpqaoela"; 
   // ---------------------
 
   const [status, setStatus] = useState(null); // null | 'submitting' | 'success' | 'error'
@@ -131,3 +131,5 @@ function ContactCard({ icon, title, email }) {
     </div>
   );
 }
+
+// Force Update Vercel Build
