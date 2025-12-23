@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Bot, ShieldAlert, Zap, Globe, Lock, Brain, 
-  Coins, UserCheck, EyeOff, Scale, Radio, Crosshair 
+  Coins, UserCheck, EyeOff, Scale, Radio, Crosshair,
+  Activity, Archive, ArrowRightLeft, ShoppingBag, 
+  UserPlus, Fingerprint, FileCode, Map
 } from 'lucide-react';
 
 export default function ServicesPage() {
-  const [region, setRegion] = useState('Global');
-
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-blue-500 pb-20">
       <div className="fixed inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-purple-900/10 via-[#050505] to-[#050505] z-0" />
@@ -21,13 +21,13 @@ export default function ServicesPage() {
             Arsenal <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Corporativo</span>
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Herramientas de nivel militar para la adquisición y gestión de talento. 
+            Herramientas de nivel militar para la adquisición, gestión y retención de talento. 
             Selecciona tu protocolo.
           </p>
         </div>
 
-        {/* NÚCLEO 1: NEURONAL (IA) */}
-        <SectionTitle title="NÚCLEO NEURONAL" subtitle="Inteligencia Artificial & Filtrado" icon={<Brain className="w-6 h-6 text-pink-500" />} />
+        {/* NÚCLEO 1: NEURONAL (IA & BIO-DATA) */}
+        <SectionTitle title="NÚCLEO NEURONAL" subtitle="Inteligencia Artificial, Análisis y Predicción" icon={<Brain className="w-6 h-6 text-pink-500" />} />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           
           <ServiceCard 
@@ -36,84 +36,133 @@ export default function ServicesPage() {
             desc="Nuestros avatares entrevistan a 1,000 candidatos simultáneamente. Sin sesgos, sin cansancio."
             tags={["High Tech", "Ahorro de Tiempo"]}
           />
+
+          <ServiceCard 
+            icon={<Activity className="text-red-500" />}
+            title="El Oráculo de Burnout"
+            desc="Analizamos patrones de Slack/Jira para predecir renuncias. 'El Lead Dev tiene 85% de riesgo de irse'."
+            warning="*Requiere consentimiento de datos."
+            tags={["Retention AI", "Big Brother"]}
+          />
           
           <ServiceCard 
-            icon={<EyeOff className="text-purple-400" />}
-            title="Blind Auditions Protocol"
-            desc="Elimina el nombre, género y foto. Tu equipo solo ve el código y el talento. Diversidad garantizada."
-            tags={["Woke Friendly", "Anti-Sesgo"]}
+            icon={<Archive className="text-amber-400" />}
+            title="Bóveda de Legado"
+            desc="Antes de que un experto renuncie, nuestra IA lo entrevista 5 horas y crea un clon consultable de su conocimiento."
+            tags={["Knowledge Cloning", "Backup Humano"]}
           />
 
+          <ServiceCard 
+            icon={<Fingerprint className="text-cyan-400" />}
+            title="ADN de Código"
+            desc="Generamos arte digital basado en el estilo de GitHub del candidato. Visualiza el caos o la elegancia."
+            tags={["Visual", "Branding"]}
+          />
+
+          <ServiceCard 
+            icon={<FileCode className="text-green-400" />}
+            title="Auditoría Spaghetti"
+            desc="Tu IA audita el código Open Source anterior del candidato. Evita contratar a gente que programa mal."
+            tags={["Tech Truth", "Audit"]}
+          />
+          
           <ServiceCard 
             icon={<Radio className="text-green-400" />}
             title="Voice Clone Support"
-            desc="Escucha cómo sonaría ese candidato de Filipinas atendiendo a tus clientes de España antes de contratarlo."
+            desc="Escucha cómo sonaría ese candidato atendiendo a tus clientes antes de contratarlo."
             tags={["ElevenLabs API", "Call Centers"]}
           />
 
-          <ServiceCard 
+           <ServiceCard 
             icon={<UserCheck className="text-yellow-400" />}
             title="Soft-Skills Calibration"
-            desc="Análisis de micro-expresiones en video para detectar Energía y Confianza. Algoritmo auditado para evitar sesgos raciales."
-            warning="*Auditoría de Ética IA incluida."
-            tags={["Psych-Ops"]}
+            desc="Análisis de micro-expresiones para detectar Energía y Confianza. Algoritmo auditado anti-sesgo."
+            tags={["Psych-Ops", "Bias-Free"]}
           />
         </div>
 
-        {/* NÚCLEO 2: TÁCTICO (HEADHUNTING) */}
-        <SectionTitle title="NÚCLEO TÁCTICO" subtitle="Adquisición Agresiva" icon={<Crosshair className="w-6 h-6 text-red-500" />} />
+        {/* NÚCLEO 2: TÁCTICO (B2B & OPERACIONES) */}
+        <SectionTitle title="NÚCLEO TÁCTICO" subtitle="Adquisición Agresiva y Movilidad" icon={<Crosshair className="w-6 h-6 text-red-500" />} />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           
           <ServiceCard 
             icon={<Zap className="text-yellow-500" />}
-            title="Sniper Bot (AI Headhunter)"
-            desc="Dinos 'Ingenieros de Uber'. Nuestro bot localiza sus emails personales y envía ofertas irrechazables."
-            warning="⚠️ Uso responsable requerido. Cumple con CAN-SPAM Act."
+            title="Sniper Bot (Outreach)"
+            desc="Localizamos emails personales de empleados de tu competencia y enviamos ofertas irrechazables."
+            warning="⚠️ Uso responsable requerido."
             tags={["Agresivo", "High Ticket"]}
             highlight
           />
 
           <ServiceCard 
+            icon={<ArrowRightLeft className="text-blue-500" />}
+            title="Protocolo de Préstamo"
+            desc="¿Tienes devs ociosos? Alquílalos a otra empresa por 3 meses sin despedirlos. Optimización pura."
+            tags={["B2B Swapping", "Eficiencia"]}
+          />
+
+          <ServiceCard 
+            icon={<ShoppingBag className="text-purple-500" />}
+            title="Mercado 'Acqui-Hiring'"
+            desc="No contrates uno por uno. Compra equipos completos de Startups fallidas (5 Ingenieros + PM) por un precio fijo."
+            tags={["Team Buyout", "Velocidad"]}
+          />
+
+          <ServiceCard 
+            icon={<UserPlus className="text-orange-500" />}
+            title="Caballo de Troya"
+            desc="Infiltramos un experto en cultura como empleado normal para arreglar ambientes tóxicos desde dentro."
+            warning="*Servicio encubierto."
+            tags={["Spy-Consulting", "Change Agent"]}
+          />
+
+          <ServiceCard 
             icon={<UsersGroup className="text-blue-500" />}
-            title="Rent-a-Squad (Flash Teams)"
-            desc="No contrates individuos. Despliega un equipo completo (Dev + Diseño + PM) que ya ha trabajado junto."
-            tags={["Speed", "Pre-Sincronizado"]}
+            title="Rent-a-Squad"
+            desc="Despliega un equipo flash (Dev + Diseño) pre-sincronizado para proyectos urgentes."
+            tags={["Speed", "Squads"]}
           />
 
           <ServiceCard 
             icon={<ShieldAlert className="text-red-500" />}
-            title="Reputation Ledger (Blacklist)"
+            title="Reputation Ledger"
             desc="Base de datos descentralizada de incidentes graves. Protege tu empresa de actores maliciosos."
-            warning="🚫 NO DISPONIBLE EN UNIÓN EUROPEA (GDPR RESTRICTED). Solo Jurisdicciones Offshore."
-            tags={["Web3", "Restricted"]}
-            opacity={60} // Visualmente indica restricción
+            warning="🚫 NO DISPONIBLE EN UNIÓN EUROPEA."
+            tags={["Web3", "Offshore Only"]}
+            opacity={60}
           />
         </div>
 
-        {/* NÚCLEO 3: FINANCIERO (DEFI) */}
-        <SectionTitle title="NÚCLEO FINANCIERO" subtitle="Liquidez y Smart Contracts" icon={<Coins className="w-6 h-6 text-green-500" />} />
+        {/* NÚCLEO 3: FINANCIERO (DEFI & GEO-POLÍTICA) */}
+        <SectionTitle title="NÚCLEO FINANCIERO" subtitle="Liquidez, Legal y Geo-Arbitraje" icon={<Coins className="w-6 h-6 text-green-500" />} />
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           
           <ServiceCard 
+            icon={<Map className="text-emerald-400" />}
+            title="Optimizador Fiscal"
+            desc="Mapa interactivo: 'Si contratas en Georgia en vez de España, el empleado gana 40% más neto'."
+            tags={["Geo-Arbitraje", "Tax Router"]}
+          />
+
+          <ServiceCard 
             icon={<Zap className="text-purple-500" />}
             title="Superfluid Streaming"
-            desc="Paga por segundo, no por mes. El dinero fluye a la wallet del empleado en tiempo real."
+            desc="Paga por segundo. El dinero fluye a la wallet del empleado en tiempo real. Retención brutal."
             tags={["Crypto", "Web3 Only"]}
           />
 
           <ServiceCard 
             icon={<Scale className="text-blue-400" />}
-            title="Smart Contract Generator"
+            title="Smart Contract Gen"
             desc="Generación automática de contratos internacionales vinculantes. Sin abogados."
-            warning="*Válido en jurisdicciones Common Law."
             tags={["LegalTech", "$29/contrato"]}
           />
 
            <ServiceCard 
             icon={<ShieldAlert className="text-orange-500" />}
-            title="Firing Insurance / Factoring"
+            title="Firing Insurance"
             desc="Adelantamos nóminas a freelancers o cubrimos despidos imprevistos."
-            warning="*Requiere licencia financiera. Disponible en: Dubai, Panamá, El Salvador."
+            warning="*Licencia limitada a zonas económicas especiales."
             tags={["Fintech", "Restricted"]}
           />
         </div>
@@ -140,7 +189,7 @@ function ServiceCard({ icon, title, desc, tags, warning, highlight, opacity = 10
   return (
     <motion.div 
       whileHover={{ y: -5 }}
-      className={`relative p-6 rounded-xl border ${highlight ? 'border-blue-500 bg-blue-900/10' : 'border-white/10 bg-white/5'} backdrop-blur-sm transition-all opacity-${opacity}`}
+      className={`relative p-6 rounded-xl border ${highlight ? 'border-blue-500 bg-blue-900/10' : 'border-white/10 bg-white/5'} backdrop-blur-sm transition-all opacity-${opacity} hover:border-white/30`}
     >
       {highlight && <div className="absolute -top-3 right-4 bg-blue-600 text-xs font-bold px-2 py-1 rounded uppercase">Most Popular</div>}
       
