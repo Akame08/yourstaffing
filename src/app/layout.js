@@ -1,22 +1,16 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
-import Shell from "@/components/Shell"; // Importamos nuestro componente inteligente
-
-const inter = Inter({ subsets: ["latin"] });
+import Shell from "@/components/Shell";
 
 export const metadata = {
   title: "YourStaffing | Global Talent OS",
-  description: "AI-Powered Recruitment Marketplace",
+  description: "Neural Network for Global Talent",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-[#050505] text-white`}>
-        {/* Envolvemos todo en el Shell */}
-        <Shell>
-          {children}
-        </Shell>
+    <html lang="es">
+      <body>
+        <Shell>{children}</Shell>
       </body>
     </html>
   );
