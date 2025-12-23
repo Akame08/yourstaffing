@@ -5,10 +5,10 @@ import {
   Briefcase, MapPin, Search, Lock, Zap, Globe, ShieldCheck, 
   Scale, Code, Sparkles, Hammer, Stethoscope, Palette, Truck, 
   GraduationCap, Calculator, Sprout, Shield, Settings, 
-  Coffee, Award, Factory, ChevronDown, ChevronUp, Users
+  Coffee, Award, Factory, Filter, CheckCircle2
 } from 'lucide-react';
 
-// --- BASE DE DATOS (Mismos datos, nueva visualización) ---
+// --- BASE DE DATOS ---
 const JOBS_DB = [
   {
     id: 1, title: "Director General (CEO)", company: "Multinacional Logística",
@@ -48,163 +48,192 @@ const JOBS_DB = [
   },
 ];
 
-// --- CATEGORÍAS EN GRID ---
+// --- LISTA VERTICAL DE CATEGORÍAS ---
 const CATEGORIES = [
-  { name: "Todo", icon: <Globe className="w-5 h-5" />, color: "bg-blue-500" },
-  { name: "Alta Dirección", icon: <Award className="w-5 h-5" />, color: "bg-yellow-500" },
-  { name: "Tecnología", icon: <Code className="w-5 h-5" />, color: "bg-indigo-500" },
-  { name: "Místico", icon: <Sparkles className="w-5 h-5" />, color: "bg-purple-500" },
-  { name: "Salud", icon: <Stethoscope className="w-5 h-5" />, color: "bg-red-500" },
-  { name: "Oficios", icon: <Hammer className="w-5 h-5" />, color: "bg-orange-500" },
-  { name: "Fuerzas Armadas", icon: <Shield className="w-5 h-5" />, color: "bg-green-600" },
-  { name: "Profesionales", icon: <GraduationCap className="w-5 h-5" />, color: "bg-teal-500" },
-  { name: "Legal", icon: <Scale className="w-5 h-5" />, color: "bg-slate-500" },
-  { name: "Creativo", icon: <Palette className="w-5 h-5" />, color: "bg-pink-500" },
-  { name: "Agro & Pesca", icon: <Sprout className="w-5 h-5" />, color: "bg-emerald-500" },
-  { name: "Logística", icon: <Truck className="w-5 h-5" />, color: "bg-cyan-500" },
-  { name: "Servicios", icon: <Coffee className="w-5 h-5" />, color: "bg-amber-500" },
-  { name: "Operarios", icon: <Factory className="w-5 h-5" />, color: "bg-gray-500" },
-  { name: "Administrativo", icon: <Calculator className="w-5 h-5" />, color: "bg-blue-400" },
-  { name: "Técnicos", icon: <Settings className="w-5 h-5" />, color: "bg-zinc-500" },
+  { name: "Todo", icon: <Globe className="w-4 h-4" /> },
+  { name: "Alta Dirección", icon: <Award className="w-4 h-4" /> },
+  { name: "Tecnología", icon: <Code className="w-4 h-4" /> },
+  { name: "Místico", icon: <Sparkles className="w-4 h-4" /> },
+  { name: "Salud", icon: <Stethoscope className="w-4 h-4" /> },
+  { name: "Legal", icon: <Scale className="w-4 h-4" /> },
+  { name: "Oficios", icon: <Hammer className="w-4 h-4" /> },
+  { name: "Fuerzas Armadas", icon: <Shield className="w-4 h-4" /> },
+  { name: "Profesionales", icon: <GraduationCap className="w-4 h-4" /> },
+  { name: "Creativo", icon: <Palette className="w-4 h-4" /> },
+  { name: "Agro & Pesca", icon: <Sprout className="w-4 h-4" /> },
+  { name: "Logística", icon: <Truck className="w-4 h-4" /> },
+  { name: "Servicios", icon: <Coffee className="w-4 h-4" /> },
+  { name: "Operarios", icon: <Factory className="w-4 h-4" /> },
+  { name: "Administrativo", icon: <Calculator className="w-4 h-4" /> },
+  { name: "Técnicos", icon: <Settings className="w-4 h-4" /> },
 ];
 
 export default function UniversalMarket() {
   const [activeCat, setActiveCat] = useState("Todo");
-  const [isExpanded, setIsExpanded] = useState(false); // Estado para expandir/colapsar
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
 
   const filteredJobs = JOBS_DB.filter(job => {
     const matchCat = activeCat === "Todo" || job.category === activeCat;
-    return matchCat;
+    const matchSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                        job.company.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchLoc = locationFilter === "" || job.location.toLowerCase().includes(locationFilter.toLowerCase());
+    return matchCat && matchSearch && matchLoc;
   });
 
-  // Mostrar solo las primeras 8 o todas según el estado
-  const visibleCategories = isExpanded ? CATEGORIES : CATEGORIES.slice(0, 8);
-
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans pb-20 pt-10">
+    <div className="min-h-screen bg-[#050505] text-white font-sans pb-20 pt-6">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         
-        {/* HEADER */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-8 border-b border-white/10 pb-6">
-          <div>
-            <h1 className="text-4xl font-bold mb-2">Mercado <span className="text-blue-500">Universal</span></h1>
-            <p className="text-gray-400">Acceso global a talento de élite en 16 sectores.</p>
-          </div>
-          <div className="flex gap-2 mt-4 md:mt-0">
-             <div className="text-right">
-                <div className="text-2xl font-mono font-bold text-white">4,230</div>
-                <div className="text-xs text-gray-500 uppercase tracking-widest">Ofertas Activas</div>
-             </div>
-          </div>
-        </div>
+        {/* LAYOUT PRINCIPAL: SIDEBAR + CONTENIDO */}
+        <div className="flex flex-col lg:flex-row gap-8">
+          
+          {/* --- SIDEBAR IZQUIERDA (FILTROS Y CATEGORÍAS) --- */}
+          <aside className="w-full lg:w-72 flex-shrink-0 space-y-8">
+            
+            {/* CAJA DE BÚSQUEDA */}
+            <div className="bg-[#111] p-5 rounded-xl border border-white/10 sticky top-24">
+              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                <Filter className="w-4 h-4" /> Filtros
+              </h3>
+              
+              <div className="space-y-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-3 text-gray-500 w-4 h-4" />
+                  <input 
+                    type="text" 
+                    placeholder="Palabra clave..." 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full bg-black/50 border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-sm focus:border-blue-500 focus:outline-none text-white"
+                  />
+                </div>
+                
+                <div className="relative">
+                  <MapPin className="absolute left-3 top-3 text-gray-500 w-4 h-4" />
+                  <input 
+                    type="text" 
+                    placeholder="Ubicación..." 
+                    value={locationFilter}
+                    onChange={(e) => setLocationFilter(e.target.value)}
+                    className="w-full bg-black/50 border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-sm focus:border-blue-500 focus:outline-none text-white"
+                  />
+                </div>
+              </div>
 
-        {/* --- NUEVO DISEÑO: GRID BENTO --- */}
-        <div className="mb-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
-            <AnimatePresence>
-              {visibleCategories.map((cat, i) => (
-                <motion.button
-                  key={cat.name}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.05 }}
-                  onClick={() => setActiveCat(cat.name)}
-                  className={`relative group flex flex-col items-center justify-center p-4 rounded-2xl border transition-all duration-300 ${
-                    activeCat === cat.name 
-                    ? 'bg-white/10 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.3)]' 
-                    : 'bg-[#0A0A0A] border-white/5 hover:bg-white/5 hover:border-white/20'
-                  }`}
-                >
-                  <div className={`mb-3 p-2 rounded-lg ${activeCat === cat.name ? 'text-white' : 'text-gray-400 group-hover:text-white'} ${activeCat === cat.name ? cat.color : 'bg-white/5'}`}>
+              <div className="my-6 border-t border-white/5"></div>
+
+              {/* LISTA VERTICAL DE CATEGORÍAS */}
+              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Sectores</h3>
+              <div className="space-y-1 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-800">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat.name}
+                    onClick={() => setActiveCat(cat.name)}
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
+                      activeCat === cat.name 
+                      ? 'bg-blue-600/20 text-blue-400 border-l-2 border-blue-500' 
+                      : 'text-gray-400 hover:bg-white/5 hover:text-white border-l-2 border-transparent'
+                    }`}
+                  >
                     {cat.icon}
-                  </div>
-                  <span className={`text-xs font-bold text-center ${activeCat === cat.name ? 'text-white' : 'text-gray-500 group-hover:text-gray-300'}`}>
-                    {cat.name}
-                  </span>
-                  
-                  {/* Luz de fondo activa */}
-                  {activeCat === cat.name && (
-                    <div className={`absolute inset-0 rounded-2xl opacity-20 ${cat.color} blur-xl -z-10`} />
-                  )}
-                </motion.button>
-              ))}
-            </AnimatePresence>
-          </div>
-
-          {/* BOTÓN EXPANDIR / COLAPSAR */}
-          <button 
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="w-full mt-4 py-2 text-xs font-bold text-gray-500 hover:text-white flex items-center justify-center gap-2 border-t border-white/5 transition-colors"
-          >
-            {isExpanded ? (
-              <>CERRAR SECTORES <ChevronUp className="w-3 h-3" /></>
-            ) : (
-              <>VER TODOS LOS SECTORES (+8) <ChevronDown className="w-3 h-3" /></>
-            )}
-          </button>
-        </div>
-
-        {/* BARRA DE BÚSQUEDA FLOTANTE */}
-        <div className="sticky top-24 z-30 mb-8">
-           <div className="bg-[#111]/90 backdrop-blur-xl border border-white/10 p-2 rounded-xl flex shadow-2xl max-w-3xl mx-auto">
-              <Search className="w-5 h-5 text-gray-500 ml-4 self-center" />
-              <input 
-                type="text" 
-                placeholder="Buscar cargo, habilidad o empresa..." 
-                className="bg-transparent border-none text-white px-4 py-3 flex-grow focus:outline-none"
-              />
-              <button className="bg-blue-600 hover:bg-blue-500 text-white px-6 rounded-lg font-bold text-sm transition">
-                FILTRAR
-              </button>
-           </div>
-        </div>
-
-        {/* RESULTADOS */}
-        <div className="grid grid-cols-1 gap-4">
-          {filteredJobs.length > 0 ? (
-            filteredJobs.map((job) => (
-              <JobCard key={job.id} job={job} />
-            ))
-          ) : (
-            <div className="text-center py-20 text-gray-500">
-               Selecciona otra categoría...
+                    <span className="font-medium">{cat.name}</span>
+                    {activeCat === cat.name && <CheckCircle2 className="w-3 h-3 ml-auto opacity-50" />}
+                  </button>
+                ))}
+              </div>
             </div>
-          )}
+          </aside>
+
+          {/* --- CONTENIDO DERECHA (RESULTADOS) --- */}
+          <main className="flex-grow pt-2">
+            
+            {/* HEADER DE RESULTADOS */}
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="text-2xl font-bold">
+                {activeCat === "Todo" ? "Todas las Ofertas" : `Empleos en ${activeCat}`}
+              </h1>
+              <span className="text-sm text-gray-500 font-mono bg-white/5 px-3 py-1 rounded-full">
+                {filteredJobs.length} Resultados
+              </span>
+            </div>
+
+            {/* LISTA DE EMPLEOS */}
+            <div className="space-y-4">
+              <AnimatePresence mode='popLayout'>
+                {filteredJobs.length > 0 ? (
+                  filteredJobs.map((job) => (
+                    <JobCard key={job.id} job={job} />
+                  ))
+                ) : (
+                  <motion.div 
+                    initial={{ opacity: 0 }} 
+                    animate={{ opacity: 1 }} 
+                    className="text-center py-20 border border-dashed border-white/10 rounded-xl"
+                  >
+                    <p className="text-gray-500">No hay ofertas activas en este sector/ubicación.</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </main>
+
         </div>
       </div>
     </div>
   );
 }
 
-// TARJETA DE EMPLEO (Horizontal Ultra-Clean)
+// TARJETA DE EMPLEO (Optimizada para lista vertical)
 function JobCard({ job }) {
   const [isUnlocked, setIsUnlocked] = useState(job.salaryVisible);
 
   return (
     <motion.div 
+      layout
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="group bg-[#0A0A0A] border border-white/5 p-6 rounded-xl hover:border-blue-500/30 transition-all flex flex-col md:flex-row items-center gap-6"
+      exit={{ opacity: 0, scale: 0.95 }}
+      className="group bg-[#0A0A0A] border border-white/10 p-5 rounded-xl hover:border-blue-500/30 transition-all hover:bg-white/[0.02] flex flex-col sm:flex-row gap-4 sm:items-center"
     >
-      <div className="flex-grow text-center md:text-left">
-        <div className="text-[10px] uppercase font-bold text-blue-500 mb-1 tracking-widest">{job.category}</div>
-        <h3 className="text-xl font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">{job.title}</h3>
-        <p className="text-sm text-gray-400">{job.company} • {job.location}</p>
+      {/* Icono Empresa */}
+      <div className="hidden sm:flex w-12 h-12 rounded bg-white/5 items-center justify-center text-gray-400 font-bold border border-white/5">
+        {job.company.charAt(0)}
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex-grow">
+        <div className="flex items-center gap-2 mb-1">
+          <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">
+            {job.title}
+          </h3>
+          {job.verified && <ShieldCheck className="w-4 h-4 text-green-500" title="Verificado" />}
+        </div>
+        
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-400">
+          <span className="text-gray-300 font-medium">{job.company}</span>
+          <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {job.location}</span>
+          <span className="text-xs bg-white/5 px-2 py-0.5 rounded border border-white/5">{job.type}</span>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between sm:justify-end gap-4 min-w-[140px] border-t sm:border-t-0 border-white/5 pt-3 sm:pt-0">
         {isUnlocked ? (
            <div className="text-right">
-             <div className="text-xl font-bold text-green-400 font-mono">${job.salary.toLocaleString()}</div>
-             <button className="text-xs bg-white text-black px-3 py-1 rounded font-bold mt-1 hover:bg-gray-200">APLICAR</button>
+             <div className="text-lg font-bold text-green-400 font-mono">${job.salary.toLocaleString()}</div>
+             {job.ppp && <div className="text-[10px] text-yellow-500">{job.ppp}</div>}
            </div>
         ) : (
-           <button onClick={() => setIsUnlocked(true)} className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg hover:bg-green-500/10 hover:text-green-400 transition border border-white/10">
-             <Lock className="w-4 h-4" /> <span className="text-sm font-bold">Ver Sueldo</span>
+           <button 
+             onClick={() => setIsUnlocked(true)}
+             className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded hover:bg-green-500/10 hover:text-green-400 transition border border-white/10 text-xs font-bold"
+           >
+             <Lock className="w-3 h-3" /> Ver Sueldo
            </button>
         )}
+        
+        <button className="bg-white text-black text-xs font-bold px-4 py-2 rounded hover:bg-gray-200 transition">
+          APLICAR
+        </button>
       </div>
     </motion.div>
   );
