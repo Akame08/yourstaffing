@@ -9,14 +9,14 @@ export default function NotFound() {
           <AlertTriangle className="w-20 h-20 text-red-500" />
         </div>
         <div>
-          <h2 className="text-6xl font-bold mb-2 text-white">404</h2>
-          <h1 className="text-xl text-red-500 font-bold uppercase">Anomalía Detectada</h1>
+          <h2 className="text-6xl font-bold mb-2 text-white text-center">404</h2>
+          <p className="text-xl text-red-500 font-bold uppercase text-center">Anomalía Detectada</p>
         </div>
-        <div className="text-sm text-gray-400 border-l-2 border-green-500 pl-4 text-left font-mono p-4">
-          <p>{'> System.scan(url);'}</p>
-          <p className="text-red-400">{'> Error: Coordinates not found.'}</p>
+        <div className="text-sm text-gray-400 border-l-2 border-green-500 pl-4 text-left font-mono p-4 bg-white/5">
+          <p>{"System.scan(url);"}</p>
+          <p className="text-red-400">{"Error: Coordinates not found."}</p>
         </div>
-        <Link href="/" className="inline-flex items-center gap-2 bg-green-600 text-black font-bold px-8 py-4 rounded-xl">
+        <Link href="/" className="inline-flex items-center gap-2 bg-green-600 text-black font-bold px-8 py-4 rounded-xl hover:bg-green-500 transition-colors">
           <ArrowLeft className="w-5 h-5" /> REINICIAR SISTEMA
         </Link>
       </div>
