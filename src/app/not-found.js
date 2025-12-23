@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { AlertTriangle, ArrowLeft, Terminal } from 'lucide-react'
+import { AlertTriangle, ArrowLeft } from 'lucide-react'
  
 export default function NotFound() {
   return (
@@ -11,7 +11,6 @@ export default function NotFound() {
            010101010101 ERROR 404 SYSTEM FAILURE 010101010101 REBOOT SEQUENCE INITIATED 0101010101
            010101010101 ERROR 404 SYSTEM FAILURE 010101010101 REBOOT SEQUENCE INITIATED 0101010101
            010101010101 ERROR 404 SYSTEM FAILURE 010101010101 REBOOT SEQUENCE INITIATED 0101010101
-           {/* (Repite visualmente) */}
         </div>
       </div>
 
@@ -28,10 +27,11 @@ export default function NotFound() {
             </h1>
         </div>
 
+        {/* AQUÍ ESTABA EL ERROR: Corregido con &gt; */}
         <div className="text-sm text-gray-400 border-l-2 border-green-500 pl-4 text-left font-mono bg-white/5 p-4 rounded">
-          <p>> System.scan(url);</p>
-          <p className="text-red-400">> Error: Coordinates not found.</p>
-          <p>> Suggestion: Return to base.</p>
+          <p>&gt; System.scan(url);</p>
+          <p className="text-red-400">&gt; Error: Coordinates not found.</p>
+          <p>&gt; Suggestion: Return to base.</p>
         </div>
 
         <Link href="/" className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-black font-bold px-8 py-4 rounded-xl transition-all hover:scale-105">
