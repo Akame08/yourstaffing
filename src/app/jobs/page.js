@@ -1,182 +1,136 @@
 "use client";
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Briefcase, MapPin, Search, Lock, Zap, Globe, ShieldCheck, 
-  Scale, Code, Sparkles, Hammer, Stethoscope, Palette, Truck, 
-  GraduationCap, Calculator, Sprout, Shield, Settings, 
-  Coffee, Award, Factory, Filter, CheckCircle2
-} from 'lucide-react';
+import { Search, MapPin, Briefcase, DollarSign, Clock, Filter, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
-// --- BASE DE DATOS ---
-const JOBS_DB = [
-  {
-    id: 1, title: "Director General (CEO)", company: "Multinacional Logística",
-    category: "Alta Dirección", location: "Panamá City, PA", type: "Presencial",
-    salary: 15000, salaryVisible: false,
-    tags: ["Estrategia", "Bilingüe", "MBA"], ppp: "Vida de Lujo", verified: true
-  },
-  {
-    id: 2, title: "Neurocirujano Principal", company: "Hospital Central",
-    category: "Profesionales", location: "Madrid, ES", type: "Turnos",
-    salary: 9000, salaryVisible: false,
-    tags: ["Medicina", "Salud"], ppp: null, verified: true
-  },
-  {
-    id: 3, title: "Soldador Subacuático", company: "Naviera Oil",
-    category: "Oficios", location: "Mar del Norte", type: "Rotación",
-    salary: 12000, salaryVisible: false,
-    tags: ["Riesgo", "Petróleo"], ppp: "Ahorro Total", verified: true
-  },
-  {
-    id: 4, title: "Asistente Virtual IA", company: "Tech Startup",
-    category: "Tecnología", location: "Remoto", type: "Freelance",
-    salary: 2000, salaryVisible: true,
-    tags: ["Prompting", "Organización"], ppp: null, verified: true
-  },
-  {
-    id: 11, title: "Astrólogo Kármico", company: "App Mística",
-    category: "Místico", location: "Remoto", type: "Freelance",
-    salary: 100, salaryVisible: true,
-    tags: ["Cartas Natales", "Zoom"], ppp: null, verified: true
-  },
-   {
-    id: 5, title: "Jefe de Sala / Maitre", company: "Restaurante Michelin",
-    category: "Servicios", location: "Lima, PE", type: "Presencial",
-    salary: 2000, salaryVisible: false,
-    tags: ["Gastronomía", "Atención"], ppp: null, verified: true
-  },
-];
+export default function Jobs() {
+  const [searchTerm, setSearchTerm] = useState('');
 
-// --- LISTA VERTICAL DE CATEGORÍAS ---
-const CATEGORIES = [
-  { name: "Todo", icon: <Globe className="w-4 h-4" /> },
-  { name: "Alta Dirección", icon: <Award className="w-4 h-4" /> },
-  { name: "Tecnología", icon: <Code className="w-4 h-4" /> },
-  { name: "Místico", icon: <Sparkles className="w-4 h-4" /> },
-  { name: "Salud", icon: <Stethoscope className="w-4 h-4" /> },
-  { name: "Legal", icon: <Scale className="w-4 h-4" /> },
-  { name: "Oficios", icon: <Hammer className="w-4 h-4" /> },
-  { name: "Fuerzas Armadas", icon: <Shield className="w-4 h-4" /> },
-  { name: "Profesionales", icon: <GraduationCap className="w-4 h-4" /> },
-  { name: "Creativo", icon: <Palette className="w-4 h-4" /> },
-  { name: "Agro & Pesca", icon: <Sprout className="w-4 h-4" /> },
-  { name: "Logística", icon: <Truck className="w-4 h-4" /> },
-  { name: "Servicios", icon: <Coffee className="w-4 h-4" /> },
-  { name: "Operarios", icon: <Factory className="w-4 h-4" /> },
-  { name: "Administrativo", icon: <Calculator className="w-4 h-4" /> },
-  { name: "Técnicos", icon: <Settings className="w-4 h-4" /> },
-];
-
-export default function UniversalMarket() {
-  const [activeCat, setActiveCat] = useState("Todo");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [locationFilter, setLocationFilter] = useState("");
-
-  const filteredJobs = JOBS_DB.filter(job => {
-    const matchCat = activeCat === "Todo" || job.category === activeCat;
-    const matchSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                        job.company.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchLoc = locationFilter === "" || job.location.toLowerCase().includes(locationFilter.toLowerCase());
-    return matchCat && matchSearch && matchLoc;
-  });
+  // DATOS DE EJEMPLO (MOCK DATA)
+  const jobs = [
+    {
+      id: 1,
+      title: "Senior AI Engineer",
+      company: "NeuralNet Corp",
+      location: "San Francisco (Remote)",
+      salary: "$180k - $250k",
+      type: "Full-time",
+      tags: ["Python", "PyTorch", "LLMs"],
+      posted: "2h ago"
+    },
+    {
+      id: 2,
+      title: "Rust Backend Developer",
+      company: "CryptoSecure",
+      location: "Global Remote",
+      salary: "$120k - $160k",
+      type: "Contract",
+      tags: ["Rust", "Solana", "Web3"],
+      posted: "5h ago"
+    },
+    {
+      id: 3,
+      title: "Product Designer (UX/UI)",
+      company: "Visionary Inc",
+      location: "London, UK",
+      salary: "£60k - £80k",
+      type: "Hybrid",
+      tags: ["Figma", "Design Systems"],
+      posted: "1d ago"
+    },
+    {
+      id: 4,
+      title: "DevOps Architect",
+      company: "CloudScale",
+      location: "Berlin, DE",
+      salary: "€90k - €110k",
+      type: "Full-time",
+      tags: ["AWS", "Kubernetes", "Terraform"],
+      posted: "2d ago"
+    }
+  ];
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans pb-20 pt-6">
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
+    <div className="min-h-screen bg-[#050505] text-white pt-32 pb-20 px-6 font-sans">
+      <div className="max-w-7xl mx-auto">
         
-        {/* LAYOUT PRINCIPAL: SIDEBAR + CONTENIDO */}
-        <div className="flex flex-col lg:flex-row gap-8">
+        {/* HEADER DE BÚSQUEDA */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">Encuentra tu misión.</h1>
+          <p className="text-gray-400 mb-8">Accede al 1% de las vacantes tecnológicas ocultas.</p>
           
-          {/* --- SIDEBAR IZQUIERDA (FILTROS Y CATEGORÍAS) --- */}
-          <aside className="w-full lg:w-72 flex-shrink-0 space-y-8">
-            
-            {/* CAJA DE BÚSQUEDA */}
-            <div className="bg-[#111] p-5 rounded-xl border border-white/10 sticky top-24">
-              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+          <div className="max-w-2xl mx-auto relative group">
+            <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-xl group-hover:blur-2xl transition-all"></div>
+            <div className="relative flex items-center bg-[#111] border border-white/10 rounded-full p-2">
+              <Search className="w-5 h-5 text-gray-500 ml-4" />
+              <input 
+                type="text" 
+                placeholder="Busca por rol, stack o empresa..."
+                className="w-full bg-transparent border-none focus:ring-0 text-white px-4 py-2 placeholder-gray-500 focus:outline-none"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-full font-bold transition">
+                Buscar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          
+          {/* SIDEBAR FILTROS */}
+          <div className="hidden lg:block space-y-8">
+            <div className="bg-[#111] p-6 rounded-xl border border-white/5">
+              <div className="flex items-center gap-2 mb-6 text-sm font-bold text-gray-400 uppercase tracking-widest">
                 <Filter className="w-4 h-4" /> Filtros
-              </h3>
+              </div>
               
-              <div className="space-y-4">
-                <div className="relative">
-                  <Search className="absolute left-3 top-3 text-gray-500 w-4 h-4" />
-                  <input 
-                    type="text" 
-                    placeholder="Palabra clave..." 
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full bg-black/50 border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-sm focus:border-blue-500 focus:outline-none text-white"
-                  />
-                </div>
-                
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-3 text-gray-500 w-4 h-4" />
-                  <input 
-                    type="text" 
-                    placeholder="Ubicación..." 
-                    value={locationFilter}
-                    onChange={(e) => setLocationFilter(e.target.value)}
-                    className="w-full bg-black/50 border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-sm focus:border-blue-500 focus:outline-none text-white"
-                  />
-                </div>
-              </div>
-
-              <div className="my-6 border-t border-white/5"></div>
-
-              {/* LISTA VERTICAL DE CATEGORÍAS */}
-              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Sectores</h3>
-              <div className="space-y-1 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-800">
-                {CATEGORIES.map((cat) => (
-                  <button
-                    key={cat.name}
-                    onClick={() => setActiveCat(cat.name)}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
-                      activeCat === cat.name 
-                      ? 'bg-blue-600/20 text-blue-400 border-l-2 border-blue-500' 
-                      : 'text-gray-400 hover:bg-white/5 hover:text-white border-l-2 border-transparent'
-                    }`}
-                  >
-                    {cat.icon}
-                    <span className="font-medium">{cat.name}</span>
-                    {activeCat === cat.name && <CheckCircle2 className="w-3 h-3 ml-auto opacity-50" />}
-                  </button>
-                ))}
+              <div className="space-y-6">
+                <FilterGroup title="Modalidad" options={["Remoto", "Híbrido", "Presencial"]} />
+                <FilterGroup title="Tipo" options={["Full-time", "Contract", "Freelance"]} />
+                <FilterGroup title="Rango Salarial" options={["$50k - $100k", "$100k - $150k", "$150k+"]} />
               </div>
             </div>
-          </aside>
+          </div>
 
-          {/* --- CONTENIDO DERECHA (RESULTADOS) --- */}
-          <main className="flex-grow pt-2">
-            
-            {/* HEADER DE RESULTADOS */}
-            <div className="flex items-center justify-between mb-6">
-              <h1 className="text-2xl font-bold">
-                {activeCat === "Todo" ? "Todas las Ofertas" : `Empleos en ${activeCat}`}
-              </h1>
-              <span className="text-sm text-gray-500 font-mono bg-white/5 px-3 py-1 rounded-full">
-                {filteredJobs.length} Resultados
-              </span>
-            </div>
+          {/* LISTA DE EMPLEOS */}
+          <div className="lg:col-span-3 space-y-4">
+            {jobs.map((job) => (
+              <div key={job.id} className="group bg-[#0A0A0A] border border-white/10 p-6 rounded-xl hover:border-blue-500/50 hover:bg-[#0f0f0f] transition-all cursor-pointer relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ChevronRight className="text-blue-500" />
+                </div>
 
-            {/* LISTA DE EMPLEOS */}
-            <div className="space-y-4">
-              <AnimatePresence mode='popLayout'>
-                {filteredJobs.length > 0 ? (
-                  filteredJobs.map((job) => (
-                    <JobCard key={job.id} job={job} />
-                  ))
-                ) : (
-                  <motion.div 
-                    initial={{ opacity: 0 }} 
-                    animate={{ opacity: 1 }} 
-                    className="text-center py-20 border border-dashed border-white/10 rounded-xl"
-                  >
-                    <p className="text-gray-500">No hay ofertas activas en este sector/ubicación.</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">{job.title}</h3>
+                    <p className="text-sm text-gray-400 mt-1">{job.company}</p>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    {job.tags.map((tag, i) => (
+                      <span key={i} className="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-300 border border-white/5">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-6 flex flex-wrap items-center gap-6 text-sm text-gray-500">
+                  <div className="flex items-center gap-2"><MapPin className="w-4 h-4"/> {job.location}</div>
+                  <div className="flex items-center gap-2"><DollarSign className="w-4 h-4"/> {job.salary}</div>
+                  <div className="flex items-center gap-2"><Briefcase className="w-4 h-4"/> {job.type}</div>
+                  <div className="flex items-center gap-2 ml-auto"><Clock className="w-4 h-4"/> {job.posted}</div>
+                </div>
+              </div>
+            ))}
+
+            <div className="text-center pt-8">
+              <button className="text-gray-500 hover:text-white text-sm font-bold border-b border-gray-500 hover:border-white transition pb-1">
+                Cargar más ofertas
+              </button>
             </div>
-          </main>
+          </div>
 
         </div>
       </div>
@@ -184,57 +138,20 @@ export default function UniversalMarket() {
   );
 }
 
-// TARJETA DE EMPLEO (Optimizada para lista vertical)
-function JobCard({ job }) {
-  const [isUnlocked, setIsUnlocked] = useState(job.salaryVisible);
-
+function FilterGroup({ title, options }) {
   return (
-    <motion.div 
-      layout
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      className="group bg-[#0A0A0A] border border-white/10 p-5 rounded-xl hover:border-blue-500/30 transition-all hover:bg-white/[0.02] flex flex-col sm:flex-row gap-4 sm:items-center"
-    >
-      {/* Icono Empresa */}
-      <div className="hidden sm:flex w-12 h-12 rounded bg-white/5 items-center justify-center text-gray-400 font-bold border border-white/5">
-        {job.company.charAt(0)}
+    <div>
+      <h4 className="text-white font-bold mb-3 text-sm">{title}</h4>
+      <div className="space-y-2">
+        {options.map((opt, i) => (
+          <label key={i} className="flex items-center gap-3 text-sm text-gray-400 hover:text-white cursor-pointer group">
+            <div className="w-4 h-4 rounded border border-white/20 group-hover:border-blue-500 flex items-center justify-center">
+              {/* Checkbox simulado */}
+            </div>
+            {opt}
+          </label>
+        ))}
       </div>
-
-      <div className="flex-grow">
-        <div className="flex items-center gap-2 mb-1">
-          <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">
-            {job.title}
-          </h3>
-          {job.verified && <ShieldCheck className="w-4 h-4 text-green-500" title="Verificado" />}
-        </div>
-        
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-400">
-          <span className="text-gray-300 font-medium">{job.company}</span>
-          <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {job.location}</span>
-          <span className="text-xs bg-white/5 px-2 py-0.5 rounded border border-white/5">{job.type}</span>
-        </div>
-      </div>
-
-      <div className="flex items-center justify-between sm:justify-end gap-4 min-w-[140px] border-t sm:border-t-0 border-white/5 pt-3 sm:pt-0">
-        {isUnlocked ? (
-           <div className="text-right">
-             <div className="text-lg font-bold text-green-400 font-mono">${job.salary.toLocaleString()}</div>
-             {job.ppp && <div className="text-[10px] text-yellow-500">{job.ppp}</div>}
-           </div>
-        ) : (
-           <button 
-             onClick={() => setIsUnlocked(true)}
-             className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded hover:bg-green-500/10 hover:text-green-400 transition border border-white/10 text-xs font-bold"
-           >
-             <Lock className="w-3 h-3" /> Ver Sueldo
-           </button>
-        )}
-        
-        <button className="bg-white text-black text-xs font-bold px-4 py-2 rounded hover:bg-gray-200 transition">
-          APLICAR
-        </button>
-      </div>
-    </motion.div>
+    </div>
   );
 }
