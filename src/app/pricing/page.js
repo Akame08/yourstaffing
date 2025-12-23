@@ -1,7 +1,6 @@
 "use client";
 import React from 'react';
 import { Check, Shield, Crown, Clock } from 'lucide-react';
-import Link from 'next/link';
 
 export default function Pricing() {
   return (
@@ -13,15 +12,15 @@ export default function Pricing() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
           
-          {/* BASICO */}
+          {/* BASICO ($25) */}
           <div className="p-8 border border-white/10 rounded-2xl bg-[#050505]">
             <h3 className="text-xl font-bold mb-2">Single Post</h3>
-            <div className="text-4xl font-bold mb-6">$49</div>
+            <div className="text-4xl font-bold mb-6">$25</div>
             <p className="text-sm text-gray-400 mb-6">1 Publicación por 30 días.</p>
             <button className="w-full py-3 bg-white/10 rounded-xl font-bold">Elegir</button>
           </div>
 
-          {/* 3 MESES (OFERTA) */}
+          {/* 3 MESES ($99) */}
           <div className="p-8 border border-yellow-500 rounded-2xl bg-[#0A0A0A] relative transform md:-translate-y-4 shadow-[0_0_30px_rgba(234,179,8,0.2)]">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-yellow-500 text-black px-4 py-1 rounded-full text-xs font-bold uppercase flex gap-2">
               <Clock className="w-3 h-3" /> Oferta Limitada

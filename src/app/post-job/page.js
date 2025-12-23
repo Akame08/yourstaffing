@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { 
   Briefcase, MapPin, DollarSign, Layout, 
-  CheckCircle2, AlertCircle, Zap, Globe 
+  CheckCircle2, Zap 
 } from 'lucide-react';
 
 export default function PostJob() {
@@ -116,7 +116,7 @@ export default function PostJob() {
               </div>
             </div>
 
-            {/* 2. SELECCIÓN DE PLAN (CORREGIDO) */}
+            {/* 2. SELECCIÓN DE PLAN (ACTUALIZADO A $25) */}
             <div className="bg-[#111] border border-white/10 rounded-2xl p-8">
               <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
                 <Zap className="w-5 h-5 text-yellow-500" /> 2. Elige tu Plan
@@ -124,7 +124,7 @@ export default function PostJob() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 
-                {/* OPCIÓN SINGLE */}
+                {/* OPCIÓN SINGLE ($25) */}
                 <div 
                   onClick={() => setPlan('single')}
                   className={`cursor-pointer p-6 rounded-xl border transition-all ${
@@ -135,13 +135,13 @@ export default function PostJob() {
                 >
                   <div className="flex justify-between items-center mb-2">
                     <span className="font-bold text-lg">Single Post</span>
-                    <span className="font-mono text-xl">$49</span>
+                    <span className="font-mono text-xl">$25</span>
                   </div>
                   <p className="text-xs text-gray-400">1 Oferta activa por 30 días.</p>
                   {plan === 'single' && <CheckCircle2 className="absolute top-4 right-4 text-blue-500 w-5 h-5" />}
                 </div>
 
-                {/* OPCIÓN QUARTERLY (RECOMENDADO) */}
+                {/* OPCIÓN QUARTERLY ($99) */}
                 <div 
                   onClick={() => setPlan('quarterly')}
                   className={`cursor-pointer p-6 rounded-xl border transition-all relative ${
@@ -165,7 +165,7 @@ export default function PostJob() {
             </div>
 
             <button className="w-full py-5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition shadow-lg text-lg flex items-center justify-center gap-2">
-              CONTINUAR AL PAGO (${plan === 'single' ? '49' : '99'})
+              CONTINUAR AL PAGO (${plan === 'single' ? '25' : '99'})
             </button>
 
           </div>
@@ -175,7 +175,6 @@ export default function PostJob() {
             <div className="sticky top-32">
               <h4 className="text-xs font-bold text-gray-500 uppercase mb-4 tracking-widest">Vista Previa en Vivo</h4>
               
-              {/* TARJETA SIMULADA */}
               <div className="bg-[#0A0A0A] border border-white/10 rounded-xl p-6 shadow-2xl relative overflow-hidden group">
                  {/* Decoración plan */}
                  {plan === 'quarterly' && (
@@ -210,14 +209,12 @@ export default function PostJob() {
                      APLICAR
                    </button>
                  </div>
-
-                 {/* Brillo amarillo si es premium */}
+                 
                  {plan === 'quarterly' && (
                     <div className="absolute inset-0 border-2 border-yellow-500/20 rounded-xl pointer-events-none" />
                  )}
               </div>
 
-              {/* BENEFICIOS */}
               <div className="mt-8 bg-[#111] p-6 rounded-xl border border-white/5">
                 <h4 className="text-sm font-bold text-white mb-4">Tu publicación incluye:</h4>
                 <ul className="space-y-3 text-xs text-gray-400">
