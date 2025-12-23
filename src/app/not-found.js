@@ -1,25 +1,20 @@
 import Link from 'next/link';
-import { AlertTriangle, ArrowLeft } from 'lucide-react';
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function NotFound() {
-  return (
-    <div className="min-h-screen bg-black text-green-500 font-mono flex flex-col items-center justify-center p-4">
-      <div className="z-10 text-center space-y-8 max-w-lg border border-green-500/30 p-12 rounded-2xl bg-black">
-        <div className="flex justify-center">
-          <AlertTriangle className="w-20 h-20 text-red-500" />
+    return (
+        <div className={`${inter.className} flex flex-col items-center justify-center min-h-screen bg-black text-white p-4`}>
+            <h1 className="text-6xl font-bold mb-4 text-blue-500">404</h1>
+            <h2 className="text-2xl font-bold mb-4">Page Not Found</h2>
+            <p className="mb-8 text-gray-400">The sector you are exploring does not exist.</p>
+            <Link
+                href="/"
+                className="px-8 py-3 border border-blue-500 text-blue-400 hover:bg-blue-500/10 rounded transition-all uppercase tracking-widest text-sm font-bold"
+            >
+                Return to Base
+            </Link>
         </div>
-        <div>
-          <h2 className="text-6xl font-bold mb-2 text-white text-center">404</h2>
-          <p className="text-xl text-red-500 font-bold uppercase text-center">Anomalía Detectada</p>
-        </div>
-        <div className="text-sm text-gray-400 border-l-2 border-green-500 pl-4 text-left font-mono p-4 bg-white/5">
-          <p>{"System.scan(url);"}</p>
-          <p className="text-red-400">{"Error: Coordinates not found."}</p>
-        </div>
-        <Link href="/" className="inline-flex items-center gap-2 bg-green-600 text-black font-bold px-8 py-4 rounded-xl hover:bg-green-500 transition-colors">
-          <ArrowLeft className="w-5 h-5" /> REINICIAR SISTEMA
-        </Link>
-      </div>
-    </div>
-  );
+    );
 }

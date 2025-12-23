@@ -1,124 +1,106 @@
 "use client";
-import React from 'react';
-import Link from "next/link";
-import { 
-  ArrowRight, CheckCircle2, Globe, Shield, 
-  Zap, Users, Briefcase, ChevronRight 
-} from "lucide-react";
+import React, { useState } from 'react'; // Ya no necesitamos useState para el idioma
+import { motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
+import { useLanguage } from '@/components/Shell'; // Importamos el hook del Shell
 
-export default function Home() {
+// TEXTOS
+const content = {
+  en: {
+    hero: {
+      h1: "Stop Hiring Employees.",
+      h1_b: "Start Integrating Intelligence.",
+      sub: "The top 1% of global talent is already pre-verified in our Neural Network. Your competition reads PDFs; you are one click away from evolution.",
+      cta: "INITIATE RECRUITMENT SEQUENCE",
+      stats: "Live Talent Map Active"
+    },
+    roi: { title: "Inefficiency Calculator", label: "Weekly Budget ($)", result: "Est. Monthly Loss:" }
+  },
+  es: {
+    hero: {
+      h1: "Deja de Contratar Empleados.",
+      h1_b: "Empieza a Integrar Inteligencia.",
+      sub: "El 1% del talento global ya está pre-verificado en nuestra Red Neuronal. Tu competencia lee PDFs; tú estás a un clic de la evolución.",
+      cta: "INICIAR SECUENCIA DE RECLUTAMIENTO",
+      stats: "Mapa de Talento Activo"
+    },
+    roi: { title: "Calculadora de Ineficiencia", label: "Presupuesto Semanal ($)", result: "Pérdida Mensual Est.:" }
+  }
+};
+
+const ParticleBackground = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {[...Array(20)].map((_, i) => (
+      <motion.div
+        key={i}
+        className="absolute bg-blue-500 rounded-full opacity-20"
+        initial={{ x: Math.random() * 100 + "%", y: Math.random() * 100 + "%", scale: 0 }}
+        animate={{ y: [null, Math.random() * -100 + "%"], opacity: [0, 0.5, 0] }}
+        transition={{ duration: Math.random() * 10 + 10, repeat: Infinity, ease: "linear" }}
+        style={{ width: Math.random() * 4 + "px", height: Math.random() * 4 + "px" }}
+      />
+    ))}
+  </div>
+);
+
+export default function YourStaffingQuantum() {
+  // CONEXIÓN CON EL SHELL
+  const { lang, toggleLang } = useLanguage();
+  const [budget, setBudget] = useState(2000);
+  const t = content[lang];
+  const loss = (budget * 0.35 * 4).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
   return (
-    <div className="bg-[#050505] text-white font-sans selection:bg-blue-500 overflow-hidden">
-      
-      {/* --- HERO SECTION --- */}
-      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6 overflow-hidden">
-        
-        {/* Fondo Cibernético */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-          <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px]" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px]" />
-        </div>
+    <div className="relative overflow-x-hidden">
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-[#050505] to-[#050505] z-0" />
+      <ParticleBackground />
 
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-bold uppercase tracking-widest mb-8 hover:bg-blue-500/20 transition cursor-default">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-            </span>
-            Sistema Operativo v2.0 Online
+      <main className="relative z-10 pt-20 pb-20 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+        <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+          <div className="flex items-center space-x-2 mb-6 text-blue-400 text-xs font-mono uppercase tracking-widest">
+            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" /><span>{t.hero.stats}</span>
           </div>
-
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-gray-500">
-            El Futuro del <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-600">Reclutamiento</span>
+          <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
+            <span className="block text-gray-500">{t.hero.h1}</span>
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-200">{t.hero.h1_b}</span>
           </h1>
+          <p className="text-lg text-gray-400 mb-8 max-w-xl border-l-2 border-blue-500/50 pl-6">{t.hero.sub}</p>
 
-          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Conectamos el 1% del talento global con empresas Fortune 500 utilizando 
-            algoritmos de Inteligencia Artificial y análisis biométrico.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/jobs">
-              <button className="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                <Briefcase className="w-5 h-5" /> BUSCAR EMPLEO
-              </button>
-            </Link>
+          <div className="flex flex-col sm:flex-row gap-4">
             <Link href="/post-job">
-              <button className="px-8 py-4 bg-transparent border border-white/20 text-white font-bold rounded-full hover:bg-white/10 transition-all flex items-center gap-2">
-                CONTRATAR TALENTO <ArrowRight className="w-5 h-5" />
+              <button className="group relative px-8 py-4 border border-blue-500 bg-blue-600/10 text-blue-400 font-bold uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
+                {t.hero.cta} <ChevronRight className="w-4 h-4" />
               </button>
             </Link>
+            {/* ESTE BOTÓN AHORA CAMBIA TODO EL SITIO */}
+            <button onClick={toggleLang} className="px-8 py-4 border border-white/10 text-gray-400 hover:text-white font-bold uppercase tracking-widest hover:bg-white/5 transition-all w-full sm:w-auto">
+              {lang === 'en' ? 'SWITCH TO ES' : 'CAMBIAR A EN'}
+            </button>
           </div>
+
+        </motion.div>
+
+        {/* PARTE DERECHA (CUBO) */}
+        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }} className="relative h-[400px] w-full bg-gradient-to-br from-gray-900 to-black rounded-xl border border-white/10 p-6 backdrop-blur-sm hidden lg:block">
+          <div className="absolute inset-0 grid grid-cols-6 grid-rows-6 gap-1 opacity-20">{[...Array(36)].map((_, i) => <div key={i} className="border border-blue-500/30" />)}</div>
+          <div className="absolute bottom-6 left-6 text-xs font-mono text-green-400">&gt; SYSTEM: TALENT NODE SYNCHRONIZED...<br />&gt; STATUS: READY.</div>
+        </motion.div>
+      </main>
+
+      {/* ROI */}
+      <section className="py-20 px-6 max-w-4xl mx-auto text-center relative z-10">
+        <div className="bg-gradient-to-r from-gray-900 to-black border border-white/10 rounded-2xl p-12">
+          <h2 className="text-3xl font-bold mb-8">{t.roi.title}</h2>
+          <div className="mb-8">
+            <label className="block text-sm text-gray-400 mb-4">{t.roi.label}</label>
+            <input type="range" min="1000" max="10000" step="500" value={budget} onChange={(e) => setBudget(Number(e.target.value))} className="w-full max-w-lg h-2 bg-gray-700 rounded-lg accent-blue-500" />
+            <div className="mt-4 text-2xl font-mono text-blue-400">${budget}</div>
+          </div>
+          <div className="text-red-400 text-xs uppercase tracking-widest mb-2">{t.roi.result}</div>
+          <div className="text-4xl font-bold text-red-500 font-mono">{loss}</div>
         </div>
       </section>
-
-      {/* --- LOGO STRIP --- */}
-      <div className="border-y border-white/5 bg-white/[0.02] py-8 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
-           {/* Logos simulados con texto para evitar errores de imágenes */}
-           <span className="text-xl font-bold font-mono">GOOGLE</span>
-           <span className="text-xl font-bold font-mono">MICROSOFT</span>
-           <span className="text-xl font-bold font-mono">SPOTIFY</span>
-           <span className="text-xl font-bold font-mono">UBER</span>
-           <span className="text-xl font-bold font-mono hidden md:block">AMAZON</span>
-        </div>
-      </div>
-
-      {/* --- FEATURES GRID --- */}
-      <section className="py-24 px-6 relative">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <FeatureCard 
-              icon={<Globe className="text-blue-500" />}
-              title="Alcance Global"
-              desc="Accede a talento en más de 140 países sin barreras legales ni complicaciones de nómina."
-            />
-            <FeatureCard 
-              icon={<Zap className="text-yellow-400" />}
-              title="Velocidad IA"
-              desc="Nuestro algoritmo 'Sniper Bot' encuentra al candidato perfecto en menos de 48 horas."
-            />
-            <FeatureCard 
-              icon={<Shield className="text-green-500" />}
-              title="Verificación Total"
-              desc="Identidad, antecedentes y habilidades técnicas verificadas automáticamente."
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* --- CTA FINAL --- */}
-      <section className="py-20 px-6">
-        <div className="max-w-5xl mx-auto bg-gradient-to-r from-blue-900/20 to-indigo-900/20 border border-blue-500/30 rounded-3xl p-12 text-center relative overflow-hidden">
-          <div className="relative z-10">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">¿Listo para el siguiente nivel?</h2>
-            <p className="text-gray-400 mb-8 max-w-xl mx-auto">
-              Únete a las más de 500 empresas que ya han automatizado su reclutamiento con YourStaffing.
-            </p>
-            <Link href="/login">
-               <button className="px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-blue-500/40">
-                 CREAR CUENTA GRATIS
-               </button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  );
-}
-
-function FeatureCard({ icon, title, desc }) {
-  return (
-    <div className="p-8 bg-[#0A0A0A] border border-white/10 rounded-2xl hover:border-blue-500/50 transition-colors group">
-      <div className="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center mb-6 group-hover:bg-white/10 transition">
-        {React.cloneElement(icon, { className: `w-6 h-6 ${icon.props.className}` })}
-      </div>
-      <h3 className="text-xl font-bold mb-3 text-white">{title}</h3>
-      <p className="text-gray-400 leading-relaxed text-sm">
-        {desc}
-      </p>
     </div>
   );
 }
