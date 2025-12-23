@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Update Vercel Build
+  reactStrictMode: true,
+  // Force Vercel Cache Reset: v1
 };
 
 export default nextConfig;
-// Force Update
