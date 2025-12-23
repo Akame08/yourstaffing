@@ -1,11 +1,11 @@
+cat << 'EOF' > src/app/page.js
 "use client";
-import React, { useState } from 'react'; // Ya no necesitamos useState para el idioma
-import { motion } from 'framer-motion';
+import React from 'react';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { useLanguage } from '@/components/Shell'; // Importamos el hook del Shell
+import { useLanguage } from '@/components/Shell'; // Importamos el hook que arreglamos antes
 
-// TEXTOS
+// TEXTOS con estructura de idiomas
 const content = {
   en: {
     hero: {
@@ -29,78 +29,66 @@ const content = {
   }
 };
 
-const ParticleBackground = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {[...Array(20)].map((_, i) => (
-      <motion.div
-        key={i}
-        className="absolute bg-blue-500 rounded-full opacity-20"
-        initial={{ x: Math.random() * 100 + "%", y: Math.random() * 100 + "%", scale: 0 }}
-        animate={{ y: [null, Math.random() * -100 + "%"], opacity: [0, 0.5, 0] }}
-        transition={{ duration: Math.random() * 10 + 10, repeat: Infinity, ease: "linear" }}
-        style={{ width: Math.random() * 4 + "px", height: Math.random() * 4 + "px" }}
-      />
-    ))}
-  </div>
-);
+export default function Page() {
+    const { language } = useLanguage();
+    
+    // Seleccionamos el idioma actual o español por defecto para evitar 'undefined'
+    const t = content[language] || content['es'];
 
-export default function YourStaffingQuantum() {
-  // CONEXIÓN CON EL SHELL
-  const { lang, toggleLang } = useLanguage();
-  const [budget, setBudget] = useState(2000);
-  const t = content[lang];
-  const loss = (budget * 0.35 * 4).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    return (
+        <div className="relative min-h-screen bg-black overflow-hidden pt-32 pb-20 px-6">
+            <div className="max-w-7xl mx-auto relative z-10">
+                {/* HERO SECTION */}
+                <div className="text-center space-y-8 mb-32">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium animate-pulse">
+                        <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                        </span>
+                        {t.hero.stats}
+                    </div>
 
-  return (
-    <div className="relative overflow-x-hidden">
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-[#050505] to-[#050505] z-0" />
-      <ParticleBackground />
+                    <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9]">
+                        <span className="text-white block">{t.hero.h1}</span>
+                        <span className="bg-gradient-to-r from-blue-400 via-blue-600 to-purple-600 bg-clip-text text-transparent block">
+                            {t.hero.h1_b}
+                        </span>
+                    </h1>
 
-      <main className="relative z-10 pt-20 pb-20 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
-        <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-          <div className="flex items-center space-x-2 mb-6 text-blue-400 text-xs font-mono uppercase tracking-widest">
-            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" /><span>{t.hero.stats}</span>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
-            <span className="block text-gray-500">{t.hero.h1}</span>
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-200">{t.hero.h1_b}</span>
-          </h1>
-          <p className="text-lg text-gray-400 mb-8 max-w-xl border-l-2 border-blue-500/50 pl-6">{t.hero.sub}</p>
+                    <p className="max-w-2xl mx-auto text-xl text-gray-400 font-light leading-relaxed">
+                        {t.hero.sub}
+                    </p>
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/post-job">
-              <button className="group relative px-8 py-4 border border-blue-500 bg-blue-600/10 text-blue-400 font-bold uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
-                {t.hero.cta} <ChevronRight className="w-4 h-4" />
-              </button>
-            </Link>
-            {/* ESTE BOTÓN AHORA CAMBIA TODO EL SITIO */}
-            <button onClick={toggleLang} className="px-8 py-4 border border-white/10 text-gray-400 hover:text-white font-bold uppercase tracking-widest hover:bg-white/5 transition-all w-full sm:w-auto">
-              {lang === 'en' ? 'SWITCH TO ES' : 'CAMBIAR A EN'}
-            </button>
-          </div>
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-6 pt-8">
+                        <Link href="/contact" className="group relative px-10 py-5 bg-white text-black font-bold rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95">
+                            <span className="relative z-10 flex items-center gap-2">
+                                {t.hero.cta} <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                            </span>
+                        </Link>
+                        <Link href="/services" className="px-10 py-5 text-white font-bold border border-white/10 rounded-full hover:bg-white/5 transition-all">
+                            EXPLORE SERVICES
+                        </Link>
+                    </div>
+                </div>
 
-        </motion.div>
-
-        {/* PARTE DERECHA (CUBO) */}
-        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }} className="relative h-[400px] w-full bg-gradient-to-br from-gray-900 to-black rounded-xl border border-white/10 p-6 backdrop-blur-sm hidden lg:block">
-          <div className="absolute inset-0 grid grid-cols-6 grid-rows-6 gap-1 opacity-20">{[...Array(36)].map((_, i) => <div key={i} className="border border-blue-500/30" />)}</div>
-          <div className="absolute bottom-6 left-6 text-xs font-mono text-green-400">&gt; SYSTEM: TALENT NODE SYNCHRONIZED...<br />&gt; STATUS: READY.</div>
-        </motion.div>
-      </main>
-
-      {/* ROI */}
-      <section className="py-20 px-6 max-w-4xl mx-auto text-center relative z-10">
-        <div className="bg-gradient-to-r from-gray-900 to-black border border-white/10 rounded-2xl p-12">
-          <h2 className="text-3xl font-bold mb-8">{t.roi.title}</h2>
-          <div className="mb-8">
-            <label className="block text-sm text-gray-400 mb-4">{t.roi.label}</label>
-            <input type="range" min="1000" max="10000" step="500" value={budget} onChange={(e) => setBudget(Number(e.target.value))} className="w-full max-w-lg h-2 bg-gray-700 rounded-lg accent-blue-500" />
-            <div className="mt-4 text-2xl font-mono text-blue-400">${budget}</div>
-          </div>
-          <div className="text-red-400 text-xs uppercase tracking-widest mb-2">{t.roi.result}</div>
-          <div className="text-4xl font-bold text-red-500 font-mono">{loss}</div>
+                {/* CALCULATOR PREVIEW (Simplified) */}
+                <div className="max-w-4xl mx-auto p-1 bg-gradient-to-b from-white/10 to-transparent rounded-[2rem]">
+                    <div className="bg-[#0a0a0a] rounded-[1.9rem] p-12 border border-white/5">
+                        <h3 className="text-2xl font-bold mb-8 text-center">{t.roi.title}</h3>
+                        <div className="grid md:grid-cols-2 gap-12 items-center">
+                            <div className="space-y-4">
+                                <label className="text-sm text-gray-500 uppercase tracking-widest">{t.roi.label}</label>
+                                <input type="range" className="w-full accent-blue-600" />
+                            </div>
+                            <div className="bg-blue-600/10 border border-blue-500/20 p-8 rounded-2xl text-center">
+                                <div className="text-sm text-blue-400 uppercase mb-2">{t.roi.result}</div>
+                                <div className="text-4xl font-black text-white">$4,200</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </section>
-    </div>
-  );
+    );
 }
+EOF
