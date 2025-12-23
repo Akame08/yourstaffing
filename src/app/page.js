@@ -3,9 +3,8 @@ cat << 'EOF' > src/app/page.js
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { useLanguage } from '@/components/Shell'; // Importamos el hook que arreglamos antes
+import { useLanguage } from '@/components/Shell';
 
-// TEXTOS con estructura de idiomas
 const content = {
   en: {
     hero: {
@@ -31,14 +30,11 @@ const content = {
 
 export default function Page() {
     const { language } = useLanguage();
-    
-    // Seleccionamos el idioma actual o español por defecto para evitar 'undefined'
     const t = content[language] || content['es'];
 
     return (
         <div className="relative min-h-screen bg-black overflow-hidden pt-32 pb-20 px-6">
             <div className="max-w-7xl mx-auto relative z-10">
-                {/* HERO SECTION */}
                 <div className="text-center space-y-8 mb-32">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium animate-pulse">
                         <span className="relative flex h-2 w-2">
@@ -65,26 +61,6 @@ export default function Page() {
                                 {t.hero.cta} <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                             </span>
                         </Link>
-                        <Link href="/services" className="px-10 py-5 text-white font-bold border border-white/10 rounded-full hover:bg-white/5 transition-all">
-                            EXPLORE SERVICES
-                        </Link>
-                    </div>
-                </div>
-
-                {/* CALCULATOR PREVIEW (Simplified) */}
-                <div className="max-w-4xl mx-auto p-1 bg-gradient-to-b from-white/10 to-transparent rounded-[2rem]">
-                    <div className="bg-[#0a0a0a] rounded-[1.9rem] p-12 border border-white/5">
-                        <h3 className="text-2xl font-bold mb-8 text-center">{t.roi.title}</h3>
-                        <div className="grid md:grid-cols-2 gap-12 items-center">
-                            <div className="space-y-4">
-                                <label className="text-sm text-gray-500 uppercase tracking-widest">{t.roi.label}</label>
-                                <input type="range" className="w-full accent-blue-600" />
-                            </div>
-                            <div className="bg-blue-600/10 border border-blue-500/20 p-8 rounded-2xl text-center">
-                                <div className="text-sm text-blue-400 uppercase mb-2">{t.roi.result}</div>
-                                <div className="text-4xl font-black text-white">$4,200</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
