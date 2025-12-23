@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import { Check, Shield, Crown, Clock, Zap } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Pricing() {
   return (
@@ -15,7 +16,7 @@ export default function Pricing() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
           
-          {/* BASICO ($25) */}
+          {/* BASICO ($25) -> Va a /post-job */}
           <div className="p-8 border border-white/10 rounded-2xl bg-[#050505] hover:border-white/20 transition flex flex-col">
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-2 text-white">Single Post</h3>
@@ -29,12 +30,14 @@ export default function Pricing() {
               <li className="flex gap-3"><Check className="w-4 h-4 text-gray-500"/> Panel de Control Básico</li>
             </ul>
 
-            <button className="w-full py-3 bg-white/10 rounded-xl font-bold hover:bg-white/20 transition">
-              ELEGIR BÁSICO
-            </button>
+            <Link href="/post-job" className="w-full">
+              <button className="w-full py-3 bg-white/10 rounded-xl font-bold hover:bg-white/20 transition">
+                ELEGIR BÁSICO
+              </button>
+            </Link>
           </div>
 
-          {/* 3 MESES ($99) - EL GANCHO */}
+          {/* 3 MESES ($99) -> Va a /post-job */}
           <div className="p-8 border border-yellow-500 rounded-2xl bg-[#0A0A0A] relative transform md:-translate-y-4 shadow-[0_0_30px_rgba(234,179,8,0.2)] flex flex-col">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-yellow-500 text-black px-4 py-1 rounded-full text-xs font-bold uppercase flex gap-2 shadow-lg">
               <Clock className="w-3 h-3" /> Más Vendido
@@ -53,12 +56,14 @@ export default function Pricing() {
               <li className="flex gap-2"><Check className="w-4 h-4 text-yellow-500"/> Soporte Prioritario 24/7</li>
             </ul>
 
-            <button className="w-full py-4 bg-yellow-500 text-black rounded-xl font-bold hover:bg-yellow-400 transition shadow-lg uppercase tracking-wide">
-              COMPRAR 3 MESES
-            </button>
+            <Link href="/post-job" className="w-full">
+              <button className="w-full py-4 bg-yellow-500 text-black rounded-xl font-bold hover:bg-yellow-400 transition shadow-lg uppercase tracking-wide">
+                COMPRAR 3 MESES
+              </button>
+            </Link>
           </div>
 
-          {/* ANUAL CORPORATIVO ($299) - NUEVO */}
+          {/* ANUAL CORPORATIVO ($299) -> Va a /contact */}
           <div className="p-8 border border-blue-500/30 rounded-2xl bg-[#050505] hover:border-blue-500 transition flex flex-col relative overflow-hidden">
              {/* Brillo de fondo */}
              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-3xl -z-10"></div>
@@ -78,9 +83,11 @@ export default function Pricing() {
               <li className="flex gap-3"><Check className="w-4 h-4 text-blue-500"/> Gestor de Cuenta Dedicado</li>
             </ul>
 
-            <button className="w-full py-3 bg-blue-600/10 text-blue-400 border border-blue-600/50 rounded-xl font-bold hover:bg-blue-600 hover:text-white transition">
-              SUSCRIPCIÓN ANUAL
-            </button>
+            <Link href="/contact" className="w-full">
+              <button className="w-full py-3 bg-blue-600/10 text-blue-400 border border-blue-600/50 rounded-xl font-bold hover:bg-blue-600 hover:text-white transition">
+                CONTACTAR VENTAS
+              </button>
+            </Link>
           </div>
 
         </div>
