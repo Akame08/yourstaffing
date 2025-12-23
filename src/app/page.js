@@ -1,4 +1,3 @@
-cat << 'EOF' > src/app/page.js
 "use client";
 import React from 'react';
 import { ChevronRight } from 'lucide-react';
@@ -67,4 +66,3 @@ export default function Page() {
         </div>
     );
 }
-EOF
