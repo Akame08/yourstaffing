@@ -1,9 +1,11 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState } from 'react'; // Ya no necesitamos useState para el idioma
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage } from '@/components/Shell'; // Importamos el hook del Shell
 
+// TEXTOS
 const content = {
   en: {
     hero: {
@@ -43,18 +45,17 @@ const ParticleBackground = () => (
 );
 
 export default function YourStaffingQuantum() {
-  const [lang, setLang] = useState('en');
+  // CONEXIÓN CON EL SHELL
+  const { lang, toggleLang } = useLanguage(); 
   const [budget, setBudget] = useState(2000);
   const t = content[lang];
   const loss = (budget * 0.35 * 4).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
   return (
     <div className="relative overflow-x-hidden">
-      {/* Fondo de Partículas */}
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-[#050505] to-[#050505] z-0" />
       <ParticleBackground />
 
-      {/* HERO */}
       <main className="relative z-10 pt-20 pb-20 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
         <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
           <div className="flex items-center space-x-2 mb-6 text-blue-400 text-xs font-mono uppercase tracking-widest">
@@ -72,13 +73,15 @@ export default function YourStaffingQuantum() {
                 {t.hero.cta} <ChevronRight className="w-4 h-4" />
                 </button>
             </Link>
-            <button onClick={() => setLang(lang === 'en' ? 'es' : 'en')} className="px-8 py-4 border border-white/10 text-gray-400 hover:text-white font-bold uppercase tracking-widest hover:bg-white/5 transition-all w-full sm:w-auto">
+            {/* ESTE BOTÓN AHORA CAMBIA TODO EL SITIO */}
+            <button onClick={toggleLang} className="px-8 py-4 border border-white/10 text-gray-400 hover:text-white font-bold uppercase tracking-widest hover:bg-white/5 transition-all w-full sm:w-auto">
                 {lang === 'en' ? 'SWITCH TO ES' : 'CAMBIAR A EN'}
             </button>
           </div>
 
         </motion.div>
-
+        
+        {/* PARTE DERECHA (CUBO) */}
         <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }} className="relative h-[400px] w-full bg-gradient-to-br from-gray-900 to-black rounded-xl border border-white/10 p-6 backdrop-blur-sm hidden lg:block">
           <div className="absolute inset-0 grid grid-cols-6 grid-rows-6 gap-1 opacity-20">{[...Array(36)].map((_, i) => <div key={i} className="border border-blue-500/30" />)}</div>
           <div className="absolute bottom-6 left-6 text-xs font-mono text-green-400">&gt; SYSTEM: TALENT NODE SYNCHRONIZED...<br />&gt; STATUS: READY.</div>
